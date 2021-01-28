@@ -11,6 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'PagesController@home' );
+Route::get('/about', 'PagesController@about')->middleware('auth');
+Route::get('/contact', 'TicketsController@create');
+Route::post('/contact', 'TicketsController@store');
+Route::get('/tickets', 'TicketsController@index');
+Route::get('/ticket/{slug?}', 'TicketsController@show')->middleware('auth');
+Route::get('/ticket/{slug?}/edit','TicketsController@edit')->middleware('auth');
+Route::post('/ticket/{slug?}/edit','TicketsController@update')->middleware('auth');
+Route::post('/ticket/{slug?}/delete','TicketsController@destroy')->middleware('auth');
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
